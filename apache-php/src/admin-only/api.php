@@ -138,7 +138,7 @@ function delete_service($debug = false, $id = 0, $title = "", $description = "",
 // для тестирования с постманом
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["postman"])) {
-        $operation = $_GET["op"];
+        $operation = "read";
         $table = $_GET["table"];
 
         $id = isset($_GET["id"]) ? $_GET["id"] : 0;
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST") { 
     if (isset($_POST["postman"])) {
-        $operation = $_POST["op"];
+        $operation = "create";
         $table = $_POST["table"];
 
         $id = isset($_POST["id"]) ? $_POST["id"] : 0;
@@ -159,6 +159,50 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $title = isset($_POST["title"]) ? $_POST["title"] : "";
         $description = isset($_POST["description"]) ? $_POST["description"] : "";
         $cost = isset($_POST["cost"]) ? $_POST["cost"] : "";
+
+        $func_name = $operation . "_" . $table;
+        if ($table == "user") {
+            $func_name(true, $id, $name, $password);
+        }
+        else if ($table == "service") {
+            $func_name(true, $id, $title, $description, $cost);
+        }
+    }
+}
+else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+    if (isset($_PUT["postman"])) {
+        $operation = "update";
+        $table = $_PUT["table"];
+
+        $id = isset($_PUT["id"]) ? $_PUT["id"] : 0;
+        $name = isset($_PUT["name"]) ? $_PUT["name"] : "";
+        $password = isset($_PUT["password"]) ? $_PUT["password"] : "";
+
+        $title = isset($_PUT["title"]) ? $_PUT["title"] : "";
+        $description = isset($_PUT["description"]) ? $_PUT["description"] : "";
+        $cost = isset($_PUT["cost"]) ? $_PUT["cost"] : "";
+
+        $func_name = $operation . "_" . $table;
+        if ($table == "user") {
+            $func_name(true, $id, $name, $password);
+        }
+        else if ($table == "service") {
+            $func_name(true, $id, $title, $description, $cost);
+        }
+    }
+}
+else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    if (isset($_DELETE["postman"])) {
+        $operation = "delete";
+        $table = $_DELETE["table"];
+
+        $id = isset($_DELETE["id"]) ? $_DELETE["id"] : 0;
+        $name = isset($_DELETE["name"]) ? $_DELETE["name"] : "";
+        $password = isset($_DELETE["password"]) ? $_DELETE["password"] : "";
+
+        $title = isset($_DELETE["title"]) ? $_DELETE["title"] : "";
+        $description = isset($_DELETE["description"]) ? $_DELETE["description"] : "";
+        $cost = isset($_DELETE["cost"]) ? $_DELETE["cost"] : "";
 
         $func_name = $operation . "_" . $table;
         if ($table == "user") {
