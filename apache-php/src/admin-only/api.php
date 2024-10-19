@@ -170,7 +170,9 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+    parse_str(file_get_contents("php://input"), $_PUT);
     if (isset($_PUT["postman"])) {
+        echo "debug";
         $operation = "update";
         $table = $_PUT["table"];
 
@@ -192,7 +194,9 @@ else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     }
 }
 else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    parse_str(file_get_contents("php://input"), $_DELETE);
     if (isset($_DELETE["postman"])) {
+        echo "debug";
         $operation = "delete";
         $table = $_DELETE["table"];
 
